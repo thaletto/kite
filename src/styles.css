@@ -7,7 +7,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
