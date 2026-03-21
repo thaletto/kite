@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "development"
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: "all"
+    auto-merge:
+      enabled: true
+      strategy: "squash"
+      allow:
+        - dependency-type: "direct"
+        - dependency-type: "indirect"
+      types:
+        - "patch"
+        - "minor"
