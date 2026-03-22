@@ -1,0 +1,12 @@
+{
+  "file_scan_exclusions": [
+    "node_modules",
+    ".tanstack",
+    ".github",
+    ".next",
+    ".tmp",
+    ".git",
+    ".zed",
+    "bun.lock",
+  ],
+}
