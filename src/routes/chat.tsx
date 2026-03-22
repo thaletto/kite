@@ -44,10 +44,10 @@ function Chat() {
   useRow();
 
   return (
-    <main className="relative z-10 bg-background h-full w-full flex-col overflow-hidden">
+    <main className="relative z-10 bg-[#FFF] h-full w-full flex-col overflow-hidden">
       <div className="mx-auto flex min-h-0 h-full w-full max-w-4xl flex-col px-4">
         <CopilotChat
-          className="flex-1 bg-background!"
+          className="flex-1"
           suggestions={[
             {
               title: "Create a pizza card",
