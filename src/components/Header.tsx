@@ -4,7 +4,7 @@ import { Button } from "#/components/ui/button";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/80 backdrop-blur-lg">
+    <header className="sticky top-0 z-50 border-b bg-background backdrop-blur-lg">
       <nav className="mx-auto flex items-center gap-4 px-4 py-3 sm:px-6">
         {/* Logo — left */}
         <Link to="/" className="shrink-0">

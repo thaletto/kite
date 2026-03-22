@@ -41,9 +41,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="font-sans antialiased wrap:anywhere selection:bg-[rgba(79,184,178,0.24)]">
         <TooltipProvider>
-          <Header />
-          {children}
-          <Footer />
+          <div className="flex h-screen flex-col">
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </div>
         </TooltipProvider>
         <TanStackDevtools
           config={{
