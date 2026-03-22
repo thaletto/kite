@@ -6,7 +6,17 @@ import tailwindcss from "@tailwindcss/vite";
 import { nitro } from "nitro/vite";
 
 const config = defineConfig({
-  plugins: [devtools(), tailwindcss(), tanstackStart(), nitro(), viteReact()],
+  plugins: [
+    devtools(),
+    tailwindcss(),
+    tanstackStart(),
+    nitro({
+      rollupConfig: {
+        external: ["katex"],
+      },
+    }),
+    viteReact(),
+  ],
   resolve: {
     tsconfigPaths: true,
   },
