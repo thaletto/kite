@@ -13,9 +13,6 @@ const config = defineConfig({
     nitro(),
     viteReact(),
   ],
-  optimizeDeps: {
-    include: ["katex"],
-  },
   resolve: {
     tsconfigPaths: true,
   },
