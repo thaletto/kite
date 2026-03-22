@@ -6,5 +6,17 @@ export default defineNitroConfig({
     functions: {
       runtime: "bun1.x",
     },
-  }
+  },
+  rollupConfig: {
+    plugins: [
+      {
+        name: "katex-esm-redirect",
+        resolveId(id: string) {
+          if (id === "katex") {
+            return require.resolve("katex/dist/katex.mjs");
+          }
+        },
+      },
+    ],
+  },
 });
