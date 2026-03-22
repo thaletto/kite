@@ -1,15 +1,12 @@
 {
   "file_scan_exclusions": [
-    ".git/",
-    ".github/",
-    ".next/",
-    ".vscode/",
-    ".zed/",
     "node_modules",
-    ".gitignore",
+    ".tanstack",
+    ".github",
+    ".next",
+    ".tmp",
+    ".git",
+    ".zed",
     "bun.lock",
-    "LICENSE",
-    "next-env.d.ts",
-    "postcss.config.mjs",
   ],
 }
