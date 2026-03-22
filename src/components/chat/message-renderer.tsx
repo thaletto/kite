@@ -15,8 +15,6 @@ const AssistantMessageRenderer = memo(function AssistantMessageRenderer({
 	)
 	if (!value) return null
 
-	const tree = (value as Record<string, unknown>).ui
-
 	return (
 		<div className="flex w-full justify-start">
 			<div className="w-full">
