@@ -43,7 +43,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <TooltipProvider>
           <div className="flex h-screen flex-col">
             <Header />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 overflow-y-auto">{children}</main>
             <Footer />
           </div>
         </TooltipProvider>
