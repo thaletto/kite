@@ -10,13 +10,12 @@ const config = defineConfig({
     devtools(),
     tailwindcss(),
     tanstackStart(),
-    nitro({
-      rollupConfig: {
-        external: ["katex"],
-      },
-    }),
+    nitro(),
     viteReact(),
   ],
+  optimizeDeps: {
+    include: ["katex"],
+  },
   resolve: {
     tsconfigPaths: true,
   },

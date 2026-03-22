@@ -7,6 +7,9 @@
     ".tmp",
     ".git",
     ".zed",
+    ".output",
+    ".vercel",
+    "dist",
     "bun.lock",
   ],
 }
