@@ -1,5 +1,5 @@
 {
-  "name": "ag-ui",
+  "name": "kite",
   "private": true,
   "type": "module",
   "imports": {
@@ -9,6 +9,8 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
+    "deploy": "bun run build && wrangler deploy",
+    "cf-typegen": "wrangler types",
     "test": "vitest run",
     "format": "biome format",
     "lint": "biome lint",
@@ -50,6 +52,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.8",
+    "@cloudflare/vite-plugin": "^1.30.0",
     "@tailwindcss/typography": "^0.5.19",
     "@tanstack/devtools-vite": "latest",
     "@types/react": "^19.2.14",
@@ -59,6 +62,7 @@
     "jsdom": "^29.0.1",
     "typescript": "^5.9.3",
     "vite": "^8.0.1",
-    "vitest": "^4.1.0"
+    "vitest": "^4.1.0",
+    "wrangler": "^4.76.0"
   }
 }
