@@ -4,7 +4,6 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import appCss from "../styles.css?url";
-import { TooltipProvider } from "#/components/ui/tooltip";
 
 const THEME_INIT_SCRIPT = `(function(){try{window.localStorage.setItem('theme','light');var root=document.documentElement;root.classList.remove('light','dark');root.classList.add('light');root.setAttribute('data-theme','light');root.style.colorScheme='light';}catch(e){}})();`;
 
@@ -40,13 +39,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="font-sans antialiased wrap:anywhere selection:bg-[rgba(79,184,178,0.24)]">
-        <TooltipProvider>
           <div className="flex h-screen flex-col">
             <Header />
             <main className="flex-1 overflow-y-auto">{children}</main>
             <Footer />
           </div>
-        </TooltipProvider>
         <TanStackDevtools
           config={{
             position: "bottom-right",
