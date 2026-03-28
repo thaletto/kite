@@ -410,11 +410,9 @@ function LandingPage() {
           <blockquote className="my-10 border-l-2 border-foreground py-1 pl-5">
             <p className="font-serif text-[1.125rem] italic leading-[1.55] text-foreground">
               AG-UI is{" "}
-              <span className="not-italic underline decoration-wavy underline-offset-4">
-                HTTP for agents and UIs
-              </span>
-              . A2UI is{" "}
-              <span className="not-italic underline decoration-wavy underline-offset-4">
+              <span className="not-italic">HTTP for agents and UIs</span>. A2UI
+              is{" "}
+              <span className="not-italic">
                 the component layer agents write
               </span>
               .
