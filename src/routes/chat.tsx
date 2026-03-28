@@ -47,7 +47,7 @@ function Chat() {
     <main className="relative z-10 bg-[#FFF] h-full w-full flex-col overflow-hidden">
       <div className="mx-auto flex min-h-0 h-full w-full max-w-4xl flex-col px-4">
         <CopilotChat
-          className=""
+          className="flex-1"
           suggestions={[
             {
               title: "Compare today's weather of New York and Los Angles",
