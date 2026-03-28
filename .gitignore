@@ -13,3 +13,6 @@ __unconfig*
 todos.json
 tmp
 .vercel
+
+# Local Netlify folder
+.netlify
