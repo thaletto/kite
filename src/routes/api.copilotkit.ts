@@ -11,7 +11,10 @@ const gateway = createGateway({
 });
 
 const agent = new BuiltInAgent({
-  model: gateway("zai/glm-4.5-air"),
+  model: gateway("google/gemini-3.1-flash-lite-preview"),
+  prompt: `You are helpful general assitant, your duty is to respond to the user in a general, friendly tone.
+  try to the frontend tools as much as possible, and reduce normal text conversations,
+  try to say your message via the frontend tools`,
 });
 
 const runtime = new CopilotRuntime({

@@ -47,15 +47,15 @@ function Chat() {
     <main className="relative z-10 bg-[#FFF] h-full w-full flex-col overflow-hidden">
       <div className="mx-auto flex min-h-0 h-full w-full max-w-4xl flex-col px-4">
         <CopilotChat
-          className="flex-1"
+          className=""
           suggestions={[
             {
-              title: "Create a pizza card",
-              message: `Create a card of popular italian pizza, mention it's preparation steps`,
+              title: "Compare today's weather of New York and Los Angles",
+              message: `Compare today's weather of New York and Los Angles`,
             },
             {
-              title: "Create a dropdown of top countries",
-              message: "Create a dropdown of top countries",
+              title: "Tell me the top 5 news today",
+              message: "Tell me the top 5 news today",
             },
           ]}
         />

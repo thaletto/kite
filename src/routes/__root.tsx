@@ -41,7 +41,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="font-sans antialiased wrap:anywhere selection:bg-[rgba(79,184,178,0.24)]">
           <div className="flex h-screen flex-col">
             <Header />
-            <main className="flex-1 overflow-y-auto">{children}</main>
+            <main className="flex-1">{children}</main>
             <Footer />
           </div>
         <TanStackDevtools
