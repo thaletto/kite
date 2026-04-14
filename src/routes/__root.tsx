@@ -4,7 +4,21 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import Header from "../components/Header";
 import appCss from "../styles.css?url";
 
-const THEME_INIT_SCRIPT = `(function(){try{window.localStorage.setItem('theme','light');var root=document.documentElement;root.classList.remove('light','dark');root.classList.add('light');root.setAttribute('data-theme','light');root.style.colorScheme='light';}catch(e){}})();`;
+const THEME_INIT_SCRIPT = `(function(){
+  try {
+    var stored = localStorage.getItem('theme');
+    var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    var theme = stored || system;
+
+    var root = document.documentElement;
+
+    root.classList.remove('light','dark');
+    root.classList.add(theme);
+
+    root.setAttribute('data-theme', theme);
+    root.style.colorScheme = theme;
+  } catch(e) {}
+})();`;
 
 export const Route = createRootRoute({
   head: () => ({

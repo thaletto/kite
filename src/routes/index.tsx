@@ -2,11 +2,12 @@ import { useChat } from "@ai-sdk/react";
 import { SPEC_DATA_PART, type SpecDataPart } from "@json-render/core";
 import { createFileRoute } from "@tanstack/react-router";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { ArrowDown, ArrowUp, Loader2, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowUp, BrushCleaning, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import MessageBubble from "@/components/chat/message";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { ThinkingLoader } from "#/components/chat/thinking";
 
 // =============================================================================
 // Types
@@ -32,7 +33,8 @@ const SUGGESTIONS = [
   },
   {
     label: "GitHub repo stats",
-    prompt: "Show me stats for the effect-ts/effect and effect-ts/effect-smol GitHub repos",
+    prompt:
+      "Show me stats for the effect-ts/effect and effect-ts/effect-smol GitHub repos",
   },
   {
     label: "Crypto dashboard",
@@ -152,8 +154,8 @@ function ChatPage() {
                   What would you like to explore?
                 </h2>
                 <p className="text-muted-foreground">
-                  Ask about weather, GitHub repos, crypto prices, or Hacker News,
-                  the agent will fetch real data and build a dashboard.
+                  Ask about weather, GitHub repos, crypto prices, or Hacker
+                  News, the agent will fetch real data and build a dashboard.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 justify-center">
@@ -226,25 +228,24 @@ function ChatPage() {
           <div className="absolute right-3 bottom-3 flex items-center gap-1.5">
             {!isEmpty && (
               <Button
+                size="icon-lg"
                 variant="outline"
-                size="sm"
                 onClick={handleClear}
-                className="h-8 px-2.5 rounded-lg text-xs"
               >
-                Start over
+                <BrushCleaning size={32}/>
               </Button>
             )}
 
             <Button
-              size="icon"
+              size="icon-lg"
+              variant="outline"
               onClick={() => handleSubmit()}
               disabled={!input.trim() || isStreaming}
-              className="h-8 w-8 rounded-lg"
             >
               {isStreaming ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <ThinkingLoader size={32}/>
               ) : (
-                <ArrowUp className="h-4 w-4" />
+                <ArrowUp size={32}/>
               )}
             </Button>
           </div>
