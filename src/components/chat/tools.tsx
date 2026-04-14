@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const TOOL_LABELS: Record<string, [string, string]> = {
   getWeather: ["Getting weather data", "Got weather data"],
@@ -30,9 +31,11 @@ export default function ToolCallDisplay({
 
   return (
     <div className="text-sm group">
-      <button
+      <Button
         type="button"
-        className="flex items-center gap-1.5"
+        variant="ghost"
+        size="sm"
+        className="flex items-center gap-1.5 h-auto px-0 py-0"
         onClick={() => setExpanded((e) => !e)}
       >
         <span
@@ -45,7 +48,7 @@ export default function ToolCallDisplay({
             className={`h-3 w-3 text-muted-foreground/0 group-hover:text-muted-foreground transition-all ${expanded ? `rotate-90` : ``}`}
           />
         )}
-      </button>
+      </Button>
       {expanded && !isLoading && result != null && (
         <div className="mt-1 max-h-64 overflow-auto">
           <pre className="text-xs text-muted-foreground whitespace-pre-wrap break-all">

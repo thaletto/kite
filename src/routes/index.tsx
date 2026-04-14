@@ -5,6 +5,8 @@ import { DefaultChatTransport, type UIMessage } from "ai";
 import { ArrowDown, ArrowUp, Loader2, Sparkles } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import MessageBubble from "@/components/chat/message";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 
 // =============================================================================
 // Types
@@ -140,7 +142,7 @@ function ChatPage() {
   return (
     // `overflow-hidden` on root keeps the page from ever scrolling itself
     <div className="h-full flex flex-col overflow-hidden">
-      {/* Messages area — this is the ONLY scrolling region */}
+      {/* Messages area */}
       <main ref={scrollContainerRef} className="flex-1 overflow-auto">
         {isEmpty ? (
           <div className="h-full flex flex-col items-center justify-center px-6 py-12">
@@ -156,14 +158,16 @@ function ChatPage() {
               </div>
               <div className="flex flex-wrap gap-2 justify-center">
                 {suggestions.map((s) => (
-                  <button
+                  <Button
                     key={s.label}
+                    variant="outline"
+                    size="sm"
                     onClick={() => handleSubmit(s.prompt)}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                    className="rounded-full"
                   >
                     <Sparkles className="h-3 w-3" />
                     {s.label}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>
@@ -188,21 +192,23 @@ function ChatPage() {
         )}
       </main>
 
-      {/* ── Sticky input bar ── */}
+      {/* Sticky input bar */}
       <div className="shrink-0 bg-background border-t px-6 pb-4 pt-3 relative">
         {/* Scroll-to-bottom pill */}
         {showScrollButton && !isEmpty && (
-          <button
+          <Button
+            variant="outline"
+            size="icon"
             onClick={scrollToBottom}
-            className="absolute left-1/2 -translate-x-1/2 -top-10 z-10 h-8 w-8 rounded-full border border-border bg-background text-muted-foreground shadow-md flex items-center justify-center hover:text-foreground hover:bg-accent transition-colors"
             aria-label="Scroll to bottom"
+            className="absolute left-1/2 -translate-x-1/2 -top-10 z-10 h-8 w-8 rounded-full shadow-md"
           >
             <ArrowDown className="h-4 w-4" />
-          </button>
+          </Button>
         )}
 
         <div className="max-w-4xl mx-auto relative">
-          <textarea
+          <Textarea
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -213,33 +219,34 @@ function ChatPage() {
                 : "Ask a follow-up..."
             }
             rows={2}
-            className="w-full resize-none rounded-xl border border-input bg-card px-4 py-3 pr-24 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            className="resize-none rounded-xl pr-24"
           />
 
-          {/* Right-side action cluster inside the textarea */}
+          {/* Right-side action cluster */}
           <div className="absolute right-3 bottom-3 flex items-center gap-1.5">
-            {/* Start Over — only shown when there are messages */}
             {!isEmpty && (
-              <button
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={handleClear}
-                className="h-8 px-2.5 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-accent border border-border transition-colors"
+                className="h-8 px-2.5 rounded-lg text-xs"
               >
                 Start over
-              </button>
+              </Button>
             )}
 
-            {/* Send / loading */}
-            <button
+            <Button
+              size="icon"
               onClick={() => handleSubmit()}
               disabled={!input.trim() || isStreaming}
-              className="h-8 w-8 rounded-lg bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="h-8 w-8 rounded-lg"
             >
               {isStreaming ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <ArrowUp className="h-4 w-4" />
               )}
-            </button>
+            </Button>
           </div>
         </div>
       </div>
