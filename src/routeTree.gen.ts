@@ -9,16 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ChatRouteImport } from './routes/chat'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiGenerateRouteImport } from './routes/api.generate'
 import { Route as ApiCopilotkitRouteImport } from './routes/api.copilotkit'
 
-const ChatRoute = ChatRouteImport.update({
-  id: '/chat',
-  path: '/chat',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,47 +31,36 @@ const ApiCopilotkitRoute = ApiCopilotkitRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/chat': typeof ChatRoute
   '/api/copilotkit': typeof ApiCopilotkitRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/chat': typeof ChatRoute
   '/api/copilotkit': typeof ApiCopilotkitRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/chat': typeof ChatRoute
   '/api/copilotkit': typeof ApiCopilotkitRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/chat' | '/api/copilotkit' | '/api/generate'
+  fullPaths: '/' | '/api/copilotkit' | '/api/generate'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/chat' | '/api/copilotkit' | '/api/generate'
-  id: '__root__' | '/' | '/chat' | '/api/copilotkit' | '/api/generate'
+  to: '/' | '/api/copilotkit' | '/api/generate'
+  id: '__root__' | '/' | '/api/copilotkit' | '/api/generate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ChatRoute: typeof ChatRoute
   ApiCopilotkitRoute: typeof ApiCopilotkitRoute
   ApiGenerateRoute: typeof ApiGenerateRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/chat': {
-      id: '/chat'
-      path: '/chat'
-      fullPath: '/chat'
-      preLoaderRoute: typeof ChatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -104,7 +87,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ChatRoute: ChatRoute,
   ApiCopilotkitRoute: ApiCopilotkitRoute,
   ApiGenerateRoute: ApiGenerateRoute,
 }
