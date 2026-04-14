@@ -32,7 +32,7 @@ const SUGGESTIONS = [
   },
   {
     label: "GitHub repo stats",
-    prompt: "Show me stats for the vercel/next.js and vercel/ai GitHub repos",
+    prompt: "Show me stats for the effect-ts/effect and effect-ts/effect-smol GitHub repos",
   },
   {
     label: "Crypto dashboard",
@@ -152,8 +152,8 @@ function ChatPage() {
                   What would you like to explore?
                 </h2>
                 <p className="text-muted-foreground">
-                  Ask about weather, GitHub repos, crypto prices, or Hacker News
-                  — the agent will fetch real data and build a dashboard.
+                  Ask about weather, GitHub repos, crypto prices, or Hacker News,
+                  the agent will fetch real data and build a dashboard.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2 justify-center">
