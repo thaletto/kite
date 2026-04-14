@@ -61,7 +61,7 @@ function ChatPage() {
   const isAutoScrolling = useRef(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const { messages, sendMessage, setMessages, status, error } =
+  const { messages, sendMessage, setMessages, status, error, stop } =
     useChat<AppMessage>({ transport });
 
   const isStreaming = status === "streaming" || status === "submitted";
@@ -136,6 +136,7 @@ function ChatPage() {
   );
 
   const handleClear = useCallback(() => {
+    stop();
     setMessages([]);
     setInput("");
     inputRef.current?.focus();
@@ -227,12 +228,8 @@ function ChatPage() {
           {/* Right-side action cluster */}
           <div className="absolute right-3 bottom-3 flex items-center gap-1.5">
             {!isEmpty && (
-              <Button
-                size="icon-lg"
-                variant="outline"
-                onClick={handleClear}
-              >
-                <BrushCleaning size={32}/>
+              <Button size="icon-lg" variant="outline" onClick={handleClear}>
+                <BrushCleaning size={32} />
               </Button>
             )}
 
@@ -243,9 +240,9 @@ function ChatPage() {
               disabled={!input.trim() || isStreaming}
             >
               {isStreaming ? (
-                <ThinkingLoader size={32}/>
+                <ThinkingLoader size={32} />
               ) : (
-                <ArrowUp size={32}/>
+                <ArrowUp size={32} />
               )}
             </Button>
           </div>
