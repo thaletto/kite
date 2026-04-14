@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiGenerateRouteImport } from './routes/api.generate'
-import { Route as ApiCopilotkitRouteImport } from './routes/api.copilotkit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -23,39 +22,30 @@ const ApiGenerateRoute = ApiGenerateRouteImport.update({
   path: '/api/generate',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiCopilotkitRoute = ApiCopilotkitRouteImport.update({
-  id: '/api/copilotkit',
-  path: '/api/copilotkit',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/api/copilotkit': typeof ApiCopilotkitRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/api/copilotkit': typeof ApiCopilotkitRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/api/copilotkit': typeof ApiCopilotkitRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/copilotkit' | '/api/generate'
+  fullPaths: '/' | '/api/generate'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/copilotkit' | '/api/generate'
-  id: '__root__' | '/' | '/api/copilotkit' | '/api/generate'
+  to: '/' | '/api/generate'
+  id: '__root__' | '/' | '/api/generate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ApiCopilotkitRoute: typeof ApiCopilotkitRoute
   ApiGenerateRoute: typeof ApiGenerateRoute
 }
 
@@ -75,19 +65,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGenerateRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/copilotkit': {
-      id: '/api/copilotkit'
-      path: '/api/copilotkit'
-      fullPath: '/api/copilotkit'
-      preLoaderRoute: typeof ApiCopilotkitRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ApiCopilotkitRoute: ApiCopilotkitRoute,
   ApiGenerateRoute: ApiGenerateRoute,
 }
 export const routeTree = rootRouteImport
