@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "base-lyra",
+  "style": "base-luma",
   "rsc": false,
   "tsx": true,
   "tailwind": {
@@ -20,6 +20,6 @@
     "hooks": "#/hooks"
   },
   "menuColor": "default",
-  "menuAccent": "bold",
+  "menuAccent": "subtle",
   "registries": {}
 }

@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { Button } from "#/components/ui/button";
+import { Button } from "@/components/ui/button";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   return (
@@ -33,6 +34,7 @@ export default function Header() {
               </svg>
             </a>
           </Button>
+          <ThemeToggle />
         </div>
       </nav>
     </header>
