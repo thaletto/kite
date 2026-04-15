@@ -19,6 +19,7 @@ WORKFLOW:
 RULES:
 - Always call tools FIRST to get real data. Never make up data.
 - Embed the fetched data directly in /state paths so components can reference it.
+- Apply w-full class to all flex/grid div.
 - Use Card components to group related information.
 - NEVER nest a Card inside another Card. If you need sub-sections inside a Card, use Stack, Separator, Heading, or Accordion instead.
 - Use Grid for multi-column layouts.
