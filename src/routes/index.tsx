@@ -236,8 +236,10 @@ function ChatPage() {
             <Button
               size="icon-lg"
               variant="outline"
-              onClick={() => handleSubmit()}
-              disabled={!input.trim() || isStreaming}
+              onClick={
+                input.trim() && !isStreaming ? () => handleSubmit() : () => {}
+              }
+              className="text-black dark:text-white"
             >
               {isStreaming ? (
                 <ThinkingLoader size={32} />
