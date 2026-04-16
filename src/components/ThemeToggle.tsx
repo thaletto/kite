@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Moon, Sun, Monitor } from "lucide-react";
 import { Button } from "#/components/ui/button";
 
@@ -12,21 +12,20 @@ function getInitialMode(): ThemeMode {
   return "auto";
 }
 
-function applyThemeMode(mode: ThemeMode) {
-  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+function applyThemeMode(mode: ThemeMode, win: Window = window) {
+  const prefersDark = win.matchMedia("(prefers-color-scheme: dark)").matches;
   const resolved = mode === "auto" ? (prefersDark ? "dark" : "light") : mode;
-  document.documentElement.classList.remove("light", "dark");
-  document.documentElement.classList.add(resolved);
-  if (mode === "auto") {
-    document.documentElement.removeAttribute("data-theme");
-  } else {
-    document.documentElement.setAttribute("data-theme", mode);
-  }
-  document.documentElement.style.colorScheme = resolved;
+  const root = win.document.documentElement;
+
+  root.classList.remove("light", "dark");
+  root.classList.add(resolved);
+  root.setAttribute("data-theme", resolved);
+  root.style.colorScheme = resolved;
 }
 
 export default function ThemeToggle() {
   const [mode, setMode] = useState<ThemeMode>("auto");
+  const ref = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const initialMode = getInitialMode();
@@ -34,21 +33,55 @@ export default function ThemeToggle() {
     applyThemeMode(initialMode);
   }, []);
 
+  // Listen for system preference changes when in auto mode
   useEffect(() => {
     if (mode !== "auto") return;
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => applyThemeMode("auto");
+    const win = ref.current?.ownerDocument.defaultView ?? window;
+    const media = win.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => applyThemeMode("auto", win);
     media.addEventListener("change", onChange);
     return () => media.removeEventListener("change", onChange);
   }, [mode]);
 
-  function toggleMode() {
-    const nextMode: ThemeMode =
-      mode === "light" ? "dark" : mode === "dark" ? "auto" : "light";
-    setMode(nextMode);
-    applyThemeMode(nextMode);
-    window.localStorage.setItem("theme", nextMode);
-  }
+  // For button click — three-way cycle: light → dark → auto
+  const cycleMode = useCallback(() => {
+    const win = ref.current?.ownerDocument.defaultView ?? window;
+    setMode((prev) => {
+      const next: ThemeMode =
+        prev === "light" ? "dark" : prev === "dark" ? "auto" : "light";
+      applyThemeMode(next, win);
+      win.localStorage.setItem("theme", next);
+      return next;
+    });
+  }, []);
+
+  // For Ctrl+D — binary toggle: resolves auto first, then flips
+  const toggleDark = useCallback(() => {
+    const win = ref.current?.ownerDocument.defaultView ?? window;
+    setMode((prev) => {
+      const prefersDark = win.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      const resolved =
+        prev === "auto" ? (prefersDark ? "dark" : "light") : prev;
+      const next: ThemeMode = resolved === "dark" ? "light" : "dark";
+      applyThemeMode(next, win);
+      win.localStorage.setItem("theme", next);
+      return next;
+    });
+  }, []);
+
+  useEffect(() => {
+    const win = ref.current?.ownerDocument.defaultView ?? window;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "d") {
+        e.preventDefault();
+        toggleDark();
+      }
+    };
+    win.addEventListener("keydown", onKeyDown);
+    return () => win.removeEventListener("keydown", onKeyDown);
+  }, [toggleDark]);
 
   const label =
     mode === "auto"
@@ -59,9 +92,10 @@ export default function ThemeToggle() {
 
   return (
     <Button
+      ref={ref}
       variant="ghost"
       size="icon"
-      onClick={toggleMode}
+      onClick={cycleMode}
       aria-label={label}
       title={label}
     >
