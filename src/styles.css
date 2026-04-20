@@ -453,14 +453,14 @@ a {
     mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><defs><filter id='blur'><feGaussianBlur stdDeviation='2'/></filter></defs><circle cx='40' cy='0' r='18' fill='white' filter='url(%23blur)'/></svg>")
       top right / 0 no-repeat;
     mask-origin: content-box;
-    animation: scale 250ms var(--expo-out);
+    animation: scale 1s var(--expo-out);
     animation-fill-mode: both;
     transform-origin: top right;
   }
 
   ::view-transition-old(root),
   .dark::view-transition-old(root) {
-    animation: scale 250ms var(--expo-out);
+    animation: scale 1s var(--expo-out);
     animation-fill-mode: both;
     transform-origin: top right;
     z-index: -1;
