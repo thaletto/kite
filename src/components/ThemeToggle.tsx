@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "#/components/ui/button";
 import { useTheme } from "#/components/theme-provider";
-import { useHaptics } from "#/hooks/use-haptics";
+import { useWebHaptics } from "web-haptics/react";
 import type { Theme } from "#/lib/theme";
 
 function applyThemeMode(theme: Theme, win: Window = window) {
@@ -23,7 +23,7 @@ function applyThemeWithTransition(theme: Theme, win: Window = window) {
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
-  const { haptic } = useHaptics();
+  const { trigger: haptic } = useWebHaptics();
 
   const toggleTheme = useCallback(() => {
     const next = theme === "light" ? "dark" : "light";

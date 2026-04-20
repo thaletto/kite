@@ -8,7 +8,7 @@ import MessageBubble from "@/components/chat/message";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ThinkingLoader } from "#/components/chat/thinking";
-import { useHaptics } from "#/hooks/use-haptics";
+import { useWebHaptics } from "web-haptics/react";
 
 // =============================================================================
 // Types
@@ -61,7 +61,7 @@ function ChatPage() {
   const isStickToBottom = useRef(true);
   const isAutoScrolling = useRef(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const { haptic } = useHaptics();
+  const { trigger: haptic, isSupported } = useWebHaptics({ debug: true });
 
   const { messages, sendMessage, setMessages, status, error, stop } =
     useChat<AppMessage>({ transport });
