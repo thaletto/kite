@@ -1,8 +1,102 @@
 # [Kite](https://kite.netlify.app)
 
+Kite is an AI-powered data exploration assistant that helps you discover and visualize information about any topic. Ask questions about weather, crypto prices, GitHub repositories, or news, and Kite fetches real-time data and builds interactive dashboards.
+
+## Architecture
+
+```mermaid
+flowchart LR
+    subgraph Client["Client (React 19)"]
+        UI[Chat UI]
+        Renderer[JSON Renderer]
+    end
+
+    subgraph Server["Server (TanStack Start)"]
+        API[API Handler]
+        RateLimit[Rate Limiter]
+        Tools[Tool Functions]
+    end
+
+    subgraph AI["AI Layer"]
+        Agent[ToolLoopAgent]
+        Gateway[AI Gateway]
+    end
+
+    subgraph External["External APIs"]
+        Weather[WeatherAPI]
+        GitHub[GitHub]
+        Crypto[CoinGecko]
+        HN[Hacker News]
+        Search[Exa Search]
+    end
+
+    UI -->|messages| API
+    API --> RateLimit
+    RateLimit --> Agent
+    Agent --> Gateway
+    Gateway -->|tool calls| Agent
+    Agent -->|calls| Tools
+    Tools -->|fetch| External
+    Agent -->|JSON spec| Renderer
+    Renderer --> UI
+```
+
+- **Client**: React 19 UI with streaming chat. Renders AI responses as JSON-defined UI components.
+- **Server**: TanStack Start server functions handle requests, rate limiting, and proxy to the AI.
+- **AI**: ToolLoopAgent orchestrates tool calls, formats responses as JSON UI specs.
+- **Tools**: Server-side functions fetch real data (weather APIs, GitHub, crypto, web search).
+
+## How It Works
+
+1. **You send a message** asking about any topic (weather, crypto, GitHub, etc.)
+2. **The agent calls tools** to fetch real, up-to-date data from external APIs
+3. **The agent responds** with a conversational summary + a JSON UI specification
+4. **The UI renderer** transforms the JSON spec into interactive React components
+5. **You see a dashboard** with charts, tables, metrics, and rich content
+
+The UI is defined entirely in JSON—the AI outputs both text and a component tree, which gets rendered by `@json-render/react`.
+
 ## Tech Stack
 
-- Tanstack Start
-- shadcn/ui
-- TailwindCSS
-- Copilotkit
+- **Framework**: TanStack Start (file-based routing, server functions)
+- **UI**: React 19 + shadcn/ui + TailwindCSS 4
+- **AI**: AI SDK with ToolLoopAgent + @ai-sdk/gateway
+- **Rendering**: [json-render](https://json-render.dev/)
+- **Charts**: Recharts + React Three Fiber (3D)
+- **Rate Limiting**: @upstash/redis
+- **Deployment**: Netlify
+
+## Available Tools
+
+| Tool | Data Source | Dashboard Components |
+|------|-------------|----------------------|
+| `getWeather` | WeatherAPI | Metric, Table |
+| `getGitHubRepo` | GitHub API | Card, Metric, Table |
+| `getGitHubPullRequests` | GitHub API | Table, Badge |
+| `getCryptoPrice` | CoinGecko | Metric, Table |
+| `getCryptoPriceHistory` | CoinGecko | LineChart, AreaChart |
+| `getHackerNewsTop` | Hacker News API | Table, Badge, Link |
+| `webSearch` | Exa search | Stack, Accordion, Tabs |
+
+## Component Library
+
+The AI can generate these components via JSON specs:
+
+**Layout**: Stack, Grid, Card, Tabs, Accordion
+**Content**: Heading, Text, Badge, Separator, Callout, Link
+**Data**: Metric, Table, BarChart, LineChart, PieChart
+**Input**: Button, RadioGroup, SelectInput, TextInput
+**3D**: Scene3D, Sphere, Box, Cone, Torus, Light, Stars, Label3D
+
+Components support data binding via `{ "$state": "/path" }` syntax. The AI stores fetched data in state, then binds components to it.
+
+## Development
+
+```bash
+bun dev          # Start dev server on port 3000
+bun run build   # Production build
+bun test       # Run tests
+bun lint       # Biome lint
+bun format     # Biome format
+```
+
