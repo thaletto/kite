@@ -1,6 +1,8 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
+import { getThemeServerFn } from "../lib/theme";
+import { ThemeProvider } from "../components/theme-provider";
 import Header from "../components/Header";
 import appCss from "../styles.css?url";
 
@@ -21,6 +23,7 @@ const THEME_INIT_SCRIPT = `(function(){
 })();`;
 
 export const Route = createRootRoute({
+  loader: () => getThemeServerFn(),
   head: () => ({
     meta: [
       {
@@ -45,26 +48,29 @@ export const Route = createRootRoute({
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const theme = Route.useLoaderData();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html className={theme} lang="en" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
       <body className="font-sans antialiased wrap:anywhere selection:bg-[rgba(79,184,178,0.24)]">
-        <div className="flex h-screen flex-col">
-          <Header />
-          <main className="min-h-0 flex-1 overflow-hidden">{children}</main>
-        </div>
-        <TanStackDevtools
-          config={{ position: "bottom-right" }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+        <ThemeProvider theme={theme}>
+          <div className="flex h-screen flex-col">
+            <Header />
+            <main className="min-h-0 flex-1 overflow-hidden">{children}</main>
+          </div>
+          <TanStackDevtools
+            config={{ position: "bottom-right" }}
+            plugins={[
+              {
+                name: "Tanstack Router",
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
+          />
+        </ThemeProvider>
         <Scripts />
       </body>
     </html>
