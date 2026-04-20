@@ -68,15 +68,15 @@ The UI is defined entirely in JSON—the AI outputs both text and a component tr
 
 ## Available Tools
 
-| Tool | Data Source | Dashboard Components |
-|------|-------------|----------------------|
-| `getWeather` | WeatherAPI | Metric, Table |
-| `getGitHubRepo` | GitHub API | Card, Metric, Table |
-| `getGitHubPullRequests` | GitHub API | Table, Badge |
-| `getCryptoPrice` | CoinGecko | Metric, Table |
-| `getCryptoPriceHistory` | CoinGecko | LineChart, AreaChart |
-| `getHackerNewsTop` | Hacker News API | Table, Badge, Link |
-| `webSearch` | Exa search | Stack, Accordion, Tabs |
+| Tool                    | Data Source     | Dashboard Components   |
+| ----------------------- | --------------- | ---------------------- |
+| `getWeather`            | WeatherAPI      | Metric, Table          |
+| `getGitHubRepo`         | GitHub API      | Card, Metric, Table    |
+| `getGitHubPullRequests` | GitHub API      | Table, Badge           |
+| `getCryptoPrice`        | CoinGecko       | Metric, Table          |
+| `getCryptoPriceHistory` | CoinGecko       | LineChart, AreaChart   |
+| `getHackerNewsTop`      | Hacker News API | Table, Badge, Link     |
+| `webSearch`             | Exa search      | Stack, Accordion, Tabs |
 
 ## Component Library
 
@@ -94,9 +94,8 @@ Components support data binding via `{ "$state": "/path" }` syntax. The AI store
 
 ```bash
 bun dev          # Start dev server on port 3000
-bun run build   # Production build
-bun test       # Run tests
-bun lint       # Biome lint
-bun format     # Biome format
+bun run build    # Production build
+bun run test     # Run tests
+bun run lint     # Biome lint
+bun run format   # Biome format
 ```
-
