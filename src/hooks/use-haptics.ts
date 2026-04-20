@@ -9,12 +9,10 @@ export function useHaptics(options?: {
 
   const haptic = React.useCallback(
     async (
-      type:
+      type?:
         | "light"
         | "medium"
         | "heavy"
-        | "rigid"
-        | "soft"
         | "success"
         | "warning"
         | "error"
@@ -23,7 +21,7 @@ export function useHaptics(options?: {
         | number[]
     ) => {
       if (isSupported) {
-        await trigger(type)
+        await trigger(type ?? "medium")
       }
     },
     [trigger, isSupported]
