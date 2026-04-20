@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HapticsTestRouteImport } from './routes/haptics-test'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiGenerateRouteImport } from './routes/api.generate'
 
+const HapticsTestRoute = HapticsTestRouteImport.update({
+  id: '/haptics-test',
+  path: '/haptics-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,32 +31,43 @@ const ApiGenerateRoute = ApiGenerateRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/haptics-test': typeof HapticsTestRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/haptics-test': typeof HapticsTestRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/haptics-test': typeof HapticsTestRoute
   '/api/generate': typeof ApiGenerateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/generate'
+  fullPaths: '/' | '/haptics-test' | '/api/generate'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/generate'
-  id: '__root__' | '/' | '/api/generate'
+  to: '/' | '/haptics-test' | '/api/generate'
+  id: '__root__' | '/' | '/haptics-test' | '/api/generate'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HapticsTestRoute: typeof HapticsTestRoute
   ApiGenerateRoute: typeof ApiGenerateRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/haptics-test': {
+      id: '/haptics-test'
+      path: '/haptics-test'
+      fullPath: '/haptics-test'
+      preLoaderRoute: typeof HapticsTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HapticsTestRoute: HapticsTestRoute,
   ApiGenerateRoute: ApiGenerateRoute,
 }
 export const routeTree = rootRouteImport
