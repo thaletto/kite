@@ -8,6 +8,7 @@ import MessageBubble from "@/components/chat/message";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { ThinkingLoader } from "#/components/chat/thinking";
+import { useHaptics } from "#/hooks/use-haptics";
 
 // =============================================================================
 // Types
@@ -60,12 +61,24 @@ function ChatPage() {
   const isStickToBottom = useRef(true);
   const isAutoScrolling = useRef(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const { haptic } = useHaptics();
 
   const { messages, sendMessage, setMessages, status, error, stop } =
     useChat<AppMessage>({ transport });
 
   const isStreaming = status === "streaming" || status === "submitted";
   const isEmpty = messages.length === 0;
+
+  const prevStatusRef = useRef(status);
+  useEffect(() => {
+    if (
+      prevStatusRef.current === "streaming" &&
+      (status === "ready" || status === "submitted")
+    ) {
+      haptic("success");
+    }
+    prevStatusRef.current = status;
+  }, [status, haptic]);
 
   // Memoised so suggestion buttons never re-render due to parent re-renders
   const suggestions = useMemo(() => SUGGESTIONS, []);
@@ -120,9 +133,10 @@ function ChatPage() {
       const message = text ?? input;
       if (!message.trim() || isStreaming) return;
       setInput("");
+      haptic("light");
       await sendMessage({ text: message.trim() });
     },
-    [input, isStreaming, sendMessage],
+    [input, isStreaming, sendMessage, haptic],
   );
 
   const handleKeyDown = useCallback(
@@ -139,8 +153,9 @@ function ChatPage() {
     stop();
     setMessages([]);
     setInput("");
+    haptic("warning");
     inputRef.current?.focus();
-  }, [setMessages]);
+  }, [setMessages, haptic, stop]);
 
   return (
     // `overflow-hidden` on root keeps the page from ever scrolling itself
