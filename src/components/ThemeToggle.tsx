@@ -28,8 +28,8 @@ export default function ThemeToggle() {
   const toggleTheme = useCallback(() => {
     const next = theme === "light" ? "dark" : "light";
     applyThemeWithTransition(next);
-    setTheme(next);
     haptic("light");
+    setTheme(next);
   }, [theme, setTheme, haptic]);
 
   const label =
