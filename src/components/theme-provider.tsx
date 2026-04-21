@@ -10,13 +10,17 @@ const ThemeContext = createContext<ThemeContextVal | null>(null);
 export function ThemeProvider({ children, theme }: Props) {
   const router = useRouter();
 
+  /**
+   * Sets the theme cookie through server function
+   * 
+   * @param val: Theme
+   * @returns void
+   */
   function setTheme(val: Theme) {
     setThemeServerFn({ data: val }).then(() => router.invalidate());
   }
 
-  return (
-    <ThemeContext value={{ theme, setTheme }}>{children}</ThemeContext>
-  );
+  return <ThemeContext value={{ theme, setTheme }}>{children}</ThemeContext>;
 }
 
 export function useTheme() {
