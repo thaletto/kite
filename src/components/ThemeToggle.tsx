@@ -27,9 +27,10 @@ export default function ThemeToggle() {
 
   const toggleTheme = useCallback(() => {
     const next = theme === "light" ? "dark" : "light";
+      setTheme(next);
+      haptic("light");
+      
     applyThemeWithTransition(next);
-    haptic("light");
-    setTheme(next);
   }, [theme, setTheme, haptic]);
 
   const label =
@@ -44,9 +45,9 @@ export default function ThemeToggle() {
       title={label}
     >
       {theme === "dark" ? (
-        <Sun className="h-5 w-5" />
-      ) : (
         <Moon className="h-5 w-5" />
+      ) : (
+        <Sun className="h-5 w-5" />
       )}
     </Button>
   );
